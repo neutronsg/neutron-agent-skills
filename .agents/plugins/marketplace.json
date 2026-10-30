@@ -1,0 +1,12 @@
+{
+  "name": "neutron",
+  "interface": { "displayName": "Neutron engineering skills" },
+  "plugins": [
+    {
+      "name": "neutron",
+      "source": { "source": "local", "path": "./plugins/neutron" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

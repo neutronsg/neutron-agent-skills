@@ -4,14 +4,14 @@ Use this structure. Keep it short: an approver should be able to act on it in a 
 
 ```text
 PR review: <PR title> (<PR URL>)
-Commit: <head SHA> · Ticket: <KEY> · Handbook rules: loaded from <URL> | not loaded (<reason>)
+Commit: <head SHA> · Ticket: <KEY>
 
 Verdict: Ready for human review | Needs changes | Blocked — <one line why>
 
 Findings, most severe first
-| # | Severity | Where | Finding | Impact | Evidence | Suggested fix | Rule |
-|---|----------|-------|---------|--------|----------|---------------|------|
-| 1 | Blocker  | app/exports/controller.rb:42 | ... | ... | ... | ... | SEC-1 |
+| # | Severity | Where | Finding | Impact | Evidence | Suggested fix |
+|---|----------|-------|---------|--------|----------|---------------|
+| 1 | Blocker  | app/exports/controller.rb:42 | ... | ... | ... | ... |
 
 Acceptance criteria
 | Criterion | Where it's handled | Tested by | Status |
@@ -34,7 +34,5 @@ Severity:
 Where: the path relative to the repository root, with a line number, such as `app/models/coupon.rb:149`. Never a local absolute path or a temporary copy; the approver can't open those.
 
 Evidence: say how you got it. If you wrote a probe script or test, keep it outside the repository, name what it ran, and delete it when you're done.
-
-Rule: the handbook requirement ID the finding breaks, such as `SEC-1`, or the project rule's file and line. Leave it empty when no rule applies.
 
 End with one line: "AI review is advisory. A person approves this PR."

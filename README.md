@@ -1,12 +1,13 @@
 # Neutron agent skills
 
-Skills for Claude Code and Codex that run Neutron's engineering workflows. Each one follows a step in the [Neutron engineering handbook](https://HANDBOOK_URL_NOT_SET) and reads the handbook's rules when it runs.
+Skills for Claude Code and Codex that run Neutron's engineering workflows, from starting on a project to reviewing a PR.
 
-| Skill | Use it to | Handbook page |
-|---|---|---|
-| `pr-review` | Review a PR against its Jira ticket before a person approves it | Code review |
+| Skill | Use it to |
+|---|---|
+| `project-discovery` | Understand the part of a project a ticket touches, and plan its branch, before changing code |
+| `pr-review` | Review a PR against its Jira ticket before a person approves it |
 
-More skills (`project-discovery`, `release-check`, `release-closeout`, `ssat-review`) are being added.
+More skills (`release-check`, `release-closeout`, `ssat-review`) are being added.
 
 ## Install
 
@@ -31,7 +32,7 @@ Then open the Plugins Directory, choose **Neutron engineering skills** and insta
 
 ## Use
 
-Type the skill's name before your request, as the handbook's prompt cards show:
+Type the skill's name before your request:
 
 - Claude Code: `/pr-review Review [PR URL] against its linked Jira ticket.`
 - Codex: `$pr-review Review [PR URL] against its linked Jira ticket.`

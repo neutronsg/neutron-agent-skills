@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "neutron",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Neutron's engineering workflows for AI agents: PR review, project discovery, release check, release closeout and SSAT review.",
   "author": {
     "name": "Neutron Engineering"

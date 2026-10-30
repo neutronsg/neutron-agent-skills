@@ -8,8 +8,7 @@ Skills for Claude Code and Codex that run Neutron's engineering workflows, from 
 | `pr-review` | Review a PR against its Jira ticket before a person approves it |
 | `release-check` | Check a release holds exactly its Fix Version's tickets, and draft its release record |
 | `release-closeout` | After a release, align the repo's docs with the code in a docs-only PR |
-
-One more skill, `ssat-review`, is being added.
+| `ssat-review` | Check a system against its SSAT checklist with evidence before go-live or a major release |
 
 ## Install
 

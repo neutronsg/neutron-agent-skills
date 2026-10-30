@@ -1,7 +1,7 @@
 {
   "name": "neutron",
   "description": "Neutron's engineering workflows for AI agents: PR review, project discovery, release check, release closeout and SSAT review.",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "author": {
     "name": "Neutron Engineering"
   }

@@ -31,7 +31,7 @@ Skills for Claude Code and Codex that run Neutron's engineering workflows. This 
 - `name` matches the folder: lowercase letters, digits and hyphens. The name is also the command engineers type (`/pr-review`, `$pr-review`), so don't rename a skill casually.
 - `description` says what the skill does, when to use it and when not to, with trigger words first. Agents choose skills from it.
 - Keep SKILL.md under 500 lines and the steps imperative. Move templates and long references into `references/`.
-- Every skill names its inputs, its boundaries (what it must not do), the evidence it collects and its report format. Skills are read-only and end in a report unless their workflow needs otherwise.
+- Every skill names its inputs, its boundaries (what it must not do), the evidence it collects and its report format. Skills are read-only and end in a report unless their workflow needs otherwise; `release-closeout` is the exception, and opens a docs-only PR it never merges.
 - Read Jira through the connected Jira MCP or `acli`, and ask for pasted details when neither works. Use `gh` for GitHub and `glab` for GitLab.
 
 ## Public repository

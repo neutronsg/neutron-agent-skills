@@ -27,9 +27,8 @@ Without a GitHub SSH key, run `export CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` first.
 
 ```bash
 codex plugin marketplace add neutronsg/neutron-agent-skills
+codex plugin add neutron@neutron
 ```
-
-Then open the Plugins Directory, choose **Neutron engineering skills** and install **neutron**.
 
 ## Use
 
@@ -38,12 +37,12 @@ Type the skill's name before your request:
 - Claude Code: `/pr-review Review [PR URL] against its linked Jira ticket.`
 - Codex: `$pr-review Review [PR URL] against its linked Jira ticket.`
 
-Skills also start on their own when a request matches their description.
+Skills also start on their own when a request matches their description, except `release-closeout`, which opens a PR and runs only when you call it by name.
 
 ## Update
 
 - Claude Code: `claude plugin marketplace update neutron`, then `claude plugin update neutron@neutron`. Start a new session to load the update.
-- Codex: `codex plugin marketplace upgrade neutron`.
+- Codex: `codex plugin marketplace upgrade neutron`, then `codex plugin add neutron@neutron` again. The first command only refreshes the list.
 
 ## Contributing
 

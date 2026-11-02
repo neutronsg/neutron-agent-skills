@@ -4,7 +4,7 @@ Map each SSAT item to the areas below by its statement. These are the checks tha
 
 ## Source control and CI
 
-- Read branch protection from the repository settings, not the docs: required review and checks on `main` and release branches, no direct pushes, no bypass for admins (`gh api repos/<owner>/<repo>/branches/main/protection`, or the GitLab equivalent).
+- Read branch rules from the repository, not the docs: required review and checks on `main` and release branches, no direct pushes, no bypass for admins. `gh api repos/<owner>/<repo>/rules/branches/<branch>` shows the rules that apply with read access only; the GitLab equivalent is the protected-branches API. A 403 or 404 means you couldn't check, not that the branch is unprotected.
 - SAST, dependency scanning and secret scanning run on every PR and fail it on a serious finding. A report-only scan is a gap. Find the workflow file and a recent run that shows it.
 - New or upgraded dependencies are checked before merge.
 
@@ -12,6 +12,7 @@ Map each SSAT item to the areas below by its statement. These are the checks tha
 
 - List every personal-data field the system stores, with why it is collected. Fields without a reason are a gap.
 - Confirm encryption in transit and at rest from the database and storage settings, not from a default you assume.
+- Test endpoints that return personal data with two accounts: one must never see the other's records.
 - Search logs, error reports and fixtures for personal data. If the user can trigger an error with synthetic data in staging, check the error report shows it redacted or not at all.
 - Record where data and backups are stored, including third-party processors, and compare with the region the project requires.
 
@@ -36,7 +37,7 @@ Map each SSAT item to the areas below by its statement. These are the checks tha
 - Every secret is read from the secrets manager or environment configuration. Search the code and CI configuration for any that aren't.
 - Record the rotation schedule and last rotation date for each secret, as far as the configuration shows.
 - A certificate-expiry alert fires well ahead of expiry, at least 30 days.
-- TLS on each public host in scope: `nmap --script ssl-enum-ciphers -p 443 <host>`. TLS 1.0, TLS 1.1 and SSL must be absent. Ask the user before running it; it's a light scan, but it is a scan.
+- TLS on each public host in scope: `openssl s_client -connect <host>:443 -tls1_1 </dev/null` should fail to connect (repeat with `-tls1`). For a full list, `nmap --script ssl-enum-ciphers -p 443 <host>`; ask the user before running it, since it is a scan. TLS 1.0, TLS 1.1 and SSL must be absent.
 
 ## APIs, input and uploads
 

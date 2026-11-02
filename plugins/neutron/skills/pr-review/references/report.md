@@ -21,9 +21,15 @@ Checks
 - CI on <SHA>: <passed | failed | pending>; skipped or report-only jobs: <list or none>
 - Run locally: <commands and results, or "nothing run">
 
+Safeguard tests (only for the areas the diff touches)
+- Present: <test cases found, with file>
+- Missing: <test cases the project should add>
+
 Not verified
 - <what you could not check, and why>
 ```
+
+Verdict: **Blocked** when any Blocker exists; **Needs changes** when there are Majors but no Blocker; **Ready for human review** otherwise.
 
 Severity:
 - **Blocker:** wrong behaviour against a criterion, a security or access gap, data loss, or an irreversible effect.

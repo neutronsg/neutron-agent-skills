@@ -14,6 +14,8 @@ const claude = json(".claude-plugin/marketplace.json"), codex = json(".agents/pl
 const plugins = new Map();
 for (const p of claude?.plugins || []) plugins.set(p.name, p.source);
 for (const p of codex?.plugins || []) if (plugins.get(p.name) !== p.source?.path) errors.push(`.agents/plugins/marketplace.json: "${p.name}" must point to the same folder as in .claude-plugin/marketplace.json`);
+const codexNames = new Set((codex?.plugins || []).map((p) => p.name));
+for (const name of plugins.keys()) if (!codexNames.has(name)) errors.push(`.agents/plugins/marketplace.json: missing plugin "${name}"; Codex users wouldn't get it`);
 const kebab = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const skills = [];
 for (const [name, src] of plugins) {
@@ -50,6 +52,12 @@ for (const s of skills) {
     for (const [, href] of body.matchAll(/\]\((?!https?:|#)([^)\s]+)\)/g)) if (!existsSync(join(dirname(join(s.dir, f)), href))) errors.push(`${join(s.rel, f)}: link to missing file ${href}`);
   }
   for (const r of refs) if (!text.includes(r)) errors.push(`${join(s.rel, r)}: not linked from SKILL.md, so agents won't read it`);
+  // A skill that commits, pushes or opens a PR runs only when called by name, in both agents.
+  const manualClaude = field("disable-model-invocation") === "true";
+  const oa = join(s.dir, "agents", "openai.yaml");
+  const manualCodex = existsSync(oa) && /allow_implicit_invocation:\s*false/.test(readFileSync(oa, "utf8"));
+  if (manualClaude !== manualCodex) errors.push(`${rel}: disable-model-invocation and agents/openai.yaml allow_implicit_invocation must agree`);
+  if (/`(git (push|commit)|gh pr create|glab mr create)\b/.test(text) && !(manualClaude && manualCodex)) errors.push(`${rel}: it commits, pushes or opens a PR, so set disable-model-invocation: true and allow_implicit_invocation: false`);
 }
 
 // A PR that changes a skill must bump the version, or installed copies never update.
@@ -59,7 +67,10 @@ if (b > 0) {
   const git = (...a) => execFileSync("git", a, { cwd: root, encoding: "utf8" });
   const changed = git("diff", "--name-only", git("merge-base", base, "HEAD").trim()).split("\n").filter((f) => /^plugins\/[^/]+\/skills\//.test(f));
   const baseVersion = JSON.parse(git("show", `${base}:plugins/neutron/plugin.json`)).version;
-  if (changed.length && baseVersion === plugins.version) errors.push(`skills changed (${changed.length} files) but the version is still ${baseVersion}; bump it in both plugin.json files`);
+  const num = (v) => v.split(".").map(Number), [a, c] = [num(baseVersion), num(plugins.version)];
+  const higher = c[0] - a[0] || c[1] - a[1] || c[2] - a[2];
+  if (changed.length && higher <= 0) errors.push(`skills changed (${changed.length} files) but the version ${plugins.version} is not above ${baseVersion}; bump it in both plugin.json files`);
+  else if (higher < 0) errors.push(`version ${plugins.version} is lower than ${baseVersion} on ${base}`);
 }
 
 if (errors.length) { for (const e of errors) console.error(`error ${e}`); process.exit(1); }

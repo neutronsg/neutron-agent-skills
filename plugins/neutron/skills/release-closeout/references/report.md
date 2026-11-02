@@ -17,7 +17,10 @@ Files
 Docs index: <updated | added to AGENTS.md | unchanged>
 Agent files: AGENTS.md <changed / unchanged> · CLAUDE.md <is "@AGENTS.md" / moved N lines into AGENTS.md>
 
-Inspected without change: <n> files — <list, or the folders covered>
+Kept, after checking
+| File | Checked against |
+|------|-----------------|
+| docs/runbooks/deploy.md | Commands match bin/deploy and the CI workflow on <SHA> |
 
 Left for tickets
 - <work found that isn't a docs fix, such as missing tests or a broken script>
@@ -26,5 +29,7 @@ This PR changes documentation only.
 ```
 
 Every row needs a concrete reason a reviewer can check in a minute: what the doc said, what the code does now, or why nobody needs the file. "Outdated" alone is not a reason.
+
+List every kept file. A reviewer should be able to repeat each check from the second column.
 
 When nothing changes, replace "This PR changes documentation only." with "No PR: every doc matched the code on <SHA>."

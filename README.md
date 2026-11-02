@@ -20,7 +20,7 @@ Paste this into Claude Code or Codex:
 Install Neutron's agent skills from the public GitHub repository neutronsg/neutron-agent-skills, for my user only.
 - If you are Claude Code, run: claude plugin marketplace add neutronsg/neutron-agent-skills, then: claude plugin install neutron@neutron
 - If you are Codex, run: codex plugin marketplace add neutronsg/neutron-agent-skills, then: codex plugin add neutron@neutron
-If the marketplace step fails because there is no GitHub SSH key, set CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1 for the command and retry.
+If Claude Code's marketplace step fails because there is no GitHub SSH key, set CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1 for that command and retry.
 Then list the installed plugins to confirm neutron is there, and tell me how to load it (a new session, or /reload-plugins in Claude Code).
 Don't change any other settings.
 ```
@@ -45,10 +45,10 @@ codex plugin add neutron@neutron
 
 ## Use
 
-Type the skill's name before your request:
+Type the skill's name before your request. Codex names plugin skills after the plugin, so the name starts with `neutron:`.
 
-- Claude Code: `/pr-review Review [PR URL] against its linked Jira ticket.`
-- Codex: `$pr-review Review [PR URL] against its linked Jira ticket.`
+- Claude Code: `/pr-review Review [PR URL] against its linked Jira ticket.` If another command already uses that name, type `/neutron:pr-review`.
+- Codex: `$neutron:pr-review Review [PR URL] against its linked Jira ticket.`
 
 Skills also start on their own when a request matches their description, except `release-closeout`, which opens a PR and runs only when you call it by name.
 

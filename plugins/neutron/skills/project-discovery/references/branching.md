@@ -27,4 +27,5 @@ Neutron's default branching. A project's own rules (its `AGENTS.md`, docs or the
 - Before branching from `main`, the latest production release must be merged back. Otherwise `main` lags behind production, and work built on it differs from what is running.
 - A branch cut from a release branch carries every ticket already in that release. It can't move to another release without checking those tickets.
 - Resolve conflicts with a release on a Release Merge branch, never on the ticket branch, and never merge the Release Merge branch back into the ticket branch.
+- Never start from an old Release Merge or other integration branch: it can carry tickets that were left out of the release.
 - Nothing is committed directly to `main` or `release/*`; changes arrive by reviewed PR.

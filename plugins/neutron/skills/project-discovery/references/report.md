@@ -31,6 +31,12 @@ Costly-to-get-wrong areas this touches
 
 How to run and test it, per the project's docs
 - <commands as documented, or "not documented">
+- Local services and test credentials it needs: <list; anything that could reach production or send real messages is a question>
+
+People and places
+- Requirement questions: <person or role, or "ask the engineer">
+- PR reviewers: <from CODEOWNERS, docs or ticket, or "ask the engineer">
+- Release runbook: <path or link, or "not found">
 
 Branch plan
 - Start from: <branch> · PR into: <branch>

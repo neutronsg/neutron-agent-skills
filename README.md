@@ -14,6 +14,19 @@ Skills for Claude Code and Codex that run Neutron's engineering workflows, from 
 
 Install once for yourself; the skills then work in any repository you open, including client repositories you can't add files to.
 
+Paste this into Claude Code or Codex:
+
+```text
+Install Neutron's agent skills from the public GitHub repository neutronsg/neutron-agent-skills, for my user only.
+- If you are Claude Code, run: claude plugin marketplace add neutronsg/neutron-agent-skills, then: claude plugin install neutron@neutron
+- If you are Codex, run: codex plugin marketplace add neutronsg/neutron-agent-skills, then: codex plugin add neutron@neutron
+If the marketplace step fails because there is no GitHub SSH key, set CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1 for the command and retry.
+Then list the installed plugins to confirm neutron is there, and tell me how to load it (a new session, or /reload-plugins in Claude Code).
+Don't change any other settings.
+```
+
+Or run the commands yourself.
+
 **Claude Code**
 
 ```bash

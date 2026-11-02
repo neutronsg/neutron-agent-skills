@@ -37,10 +37,11 @@ An advisory review of one PR at one commit. A person approves the PR; you never 
 3. **Access.** Every path to a record checks tenant or ownership and the action's permission on the server: APIs, exports, downloads, jobs and callbacks. A hidden button is not a check.
 4. **Data.** Old code must keep working against the new schema during a rolling deploy; no rename or drop in one release; migrations run as their own deploy step, never on app start; backfills are resumable jobs; nothing is lost.
 5. **Retries and external effects.** Operations have stable identities and idempotency; a timeout is an unknown outcome, not a failure; nothing sends, charges or orders twice.
-6. **Compatibility.** API changes keep every supported client and installed app version working.
-7. **Security basics.** Validation and permissions on the server; no SQL built from strings or user input passed to a shell; CSRF protection on state changes; errors don't expose stack traces or internals; no secrets or personal data in code, fixtures or logs; new or upgraded dependencies checked.
-8. **Scope and docs.** One purpose per PR; docs and agent instructions updated in the same PR; the description says why, links the ticket, gives evidence and states what wasn't verified.
-9. **CI on the head commit.** Required checks pass. Look at skipped jobs and report-only findings; a green summary can hide missing evidence.
+6. **External calls.** Every call has an explicit timeout and runs outside a database transaction. Only safe requests are retried, with backoff, honouring 429 and `Retry-After`. Calls to a provider are throttled across all workers, and bulk work runs on its own paced queue. A provider outage degrades one feature, not the app. Webhooks are verified, deduplicated by event ID and can't overwrite newer state.
+7. **Compatibility.** API changes keep every supported client and installed app version working.
+8. **Security basics.** Validation and permissions on the server; no SQL built from strings or user input passed to a shell; CSRF protection on state changes; errors don't expose stack traces or internals; no secrets or personal data in code, fixtures or logs; new or upgraded dependencies checked.
+9. **Scope and docs.** One purpose per PR; docs and agent instructions updated in the same PR; the description says why, links the ticket, gives evidence and states what wasn't verified.
+10. **CI on the head commit.** Required checks pass. Look at skipped jobs and report-only findings; a green summary can hide missing evidence.
 
 When the diff touches these, also check:
 

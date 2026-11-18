@@ -5,7 +5,7 @@ Skills for Claude Code and Codex that run Neutron's engineering workflows, from 
 | Skill | Use it to |
 |---|---|
 | `project-discovery` | Understand the part of a project a ticket touches, and plan its branch, before changing code |
-| `pr-review` | Review a PR against its Jira ticket before a person approves it |
+| `pr-review` | Review a PR against its Jira ticket and recommend whether to merge it |
 | `release-check` | Check a release holds exactly its Fix Version's tickets, and draft its release record |
 | `release-closeout` | After a release, align the repo's docs with the code in a docs-only PR |
 | `ssat-review` | Check a system against its SSAT checklist with evidence before go-live or a major release |

@@ -1,11 +1,11 @@
 ---
 name: pr-review
-description: Review a pull request or merge request against its Jira ticket, read-only, and report evidence-backed findings for a human approver. Use when asked to review a PR, MR, branch or diff before approval. Not for fixing code, posting comments or approving.
+description: Review a pull request or merge request against its Jira ticket and give an evidence-backed merge recommendation. Use for read-only review of a PR, MR, branch or diff before human approval.
 ---
 
 # PR review
 
-An advisory review of one PR at one commit. A person approves the PR; you never do. Your job is findings the approver can trust: each one tied to a file and line, with evidence.
+Give a merge recommendation for the reviewed commit. Explain the evidence that drives it and tie each finding to a file and line. The project's human approver owns formal approval.
 
 ## Inputs
 
@@ -34,14 +34,14 @@ An advisory review of one PR at one commit. A person approves the PR; you never 
 
 ## 2. Read the ticket and the project's rules
 
-- **Ticket:** use the connected Jira MCP, or `acli jira workitem view <KEY> --fields '*all' --json`. Read the description, acceptance criteria, comments and Fix Version. If you can't reach Jira, ask the user to paste them. Never invent acceptance criteria.
+- **Ticket:** use the connected Jira MCP, or `acli jira workitem view <KEY> --fields '*all' --json`. Read the description, acceptance criteria, comments and Fix Version. If you can't reach Jira, use the scope the user has supplied and ask for any missing details that matter to the review. State which criteria you used and where they came from.
 - **Repository:** read `AGENTS.md` or `CLAUDE.md`, the docs index, and any runbook or contributing doc the diff touches. The project's rules apply alongside the checks below; on a client project, the client's stated requirements take precedence.
 
 ## 3. Review, most costly mistakes first
 
 1. **Target and scope.** The PR targets the release branch for the ticket's Fix Version, or whatever branch the project's rules name. A PR into the wrong branch ships the ticket in the wrong release: a Blocker. One purpose per PR.
 2. **Behaviour.** Check each acceptance criterion against the code, including empty, error and boundary cases.
-3. **Tests.** Do they check the criteria, or restate the implementation's assumptions? A bug fix needs a regression test that fails without the fix.
+3. **Tests.** Check whether they exercise the actual criteria and failure modes. For a bug fix, look for a regression test that fails without the fix. Use documented manual regression evidence where the project accepts it.
 4. **What the PR adds to the build,** before running anything: new or upgraded dependencies exist under the expected name, are maintained, meet the repository's minimum age for new versions if it sets one, and have install scripts reviewed; lockfile and CI workflow changes are intended; third-party CI actions and images are pinned to a commit SHA or digest.
 5. **Access.** Every path to a record checks tenant or ownership and the action's permission on the server: APIs, exports, downloads, jobs and callbacks. A hidden button is not a check.
 6. **Data.** Old code must keep working against the new schema during a rolling deploy; no rename or drop in one release; migrations run as their own deploy step, never on app start; backfills are resumable jobs; nothing is lost.
@@ -55,6 +55,8 @@ An advisory review of one PR at one commit. A person approves the PR; you never 
 When the diff touches permissions, schema, jobs or external calls, money or points, or SMS and other paid calls, also apply the checks and test cases in [references/safeguards.md](references/safeguards.md), and report which of those tests exist and which are missing.
 
 Leave formatting and style to the repository's linters unless it hides a bug.
+
+Judge findings against the agreed scope and project rules. Include an inherited issue in the verdict when the change exposes a new path to it, worsens it, or violates a project rule.
 
 ## 4. Prove each finding
 
